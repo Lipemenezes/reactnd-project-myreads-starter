@@ -5,6 +5,9 @@ import { Link } from 'react-router-dom'
 import BooksGrid from './BooksGrid'
 
 class SearchBook extends React.Component {
+  state = {
+    books: []
+  }
 
   render() {
     return (
@@ -27,7 +30,7 @@ class SearchBook extends React.Component {
               </div>
             </div>
             <div className="search-books-results">
-              <BooksGrid />
+              <BooksGrid books={this.state.books} />
             </div>
           </div> 
     )
