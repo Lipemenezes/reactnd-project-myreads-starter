@@ -2,7 +2,7 @@ import React from 'react'
 // import * as BooksAPI from './BooksAPI'
 import '../App.css'
 import { Link } from 'react-router-dom'
-import BooksGrid from './BooksGrid'
+import Book from './Book'
 
 class SearchBook extends React.Component {
   state = {
@@ -30,7 +30,9 @@ class SearchBook extends React.Component {
               </div>
             </div>
             <div className="search-books-results">
-              <BooksGrid books={this.state.books} />
+              <ol className="books-grid">
+                {this.state.books.length ? (this.state.books.map(book => <Book book={book} key={book.id}/> )) : <div>Get some custom component for spinner..</div>}
+              </ol>
             </div>
           </div> 
     )

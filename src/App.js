@@ -7,24 +7,33 @@ import { Route, Link } from 'react-router-dom'
 
 class BooksApp extends React.Component {
   state = {
-    books: [],
-    wantToRead: [],
-    currentlyReading: [],
-    read: []
+    shelfs: {
+        currentlyReading: [],
+        wantToRead: [],
+        read: []
+    },
   }
 
   componentDidMount() {
     BooksAPI.getAll().then(books => {
-      const currentlyReading = books.filter(book => book.shelf === `currentlyReading`)
-      const wantToRead = books.filter(book => book.shelf === `wantToRead`)
-      const read = books.filter(book => book.shelf === `read`)
       this.setState({
-        books: books,
-        currentlyReading: currentlyReading,
-        wantToRead: wantToRead,
-        read: read
+        shelfs: {
+          currentlyReading: books.filter(book => book.shelf === `currentlyReading`),
+          wantToRead: books.filter(book => book.shelf === `wantToRead`),
+          read: books.filter(book => book.shelf === `read`)
+        }
       })
     })
+  }
+
+  changeBookShelf = (book, newShelf) => {
+    let shelfs = this.state.shelfs
+    shelfs[book.shelf] = shelfs[book.shelf].filter(stateBook => stateBook.id !== book.id)
+    shelfs[newShelf] = shelfs[newShelf].concat([book])
+    book.shelf = newShelf
+    this.setState({
+      shelfs: shelfs
+    })     
   }
 
   render() {
@@ -41,9 +50,9 @@ class BooksApp extends React.Component {
               </div>
               <div className="list-books-content">
                 <div>
-                  <Bookshelf title='Currently Reading' books={this.state.currentlyReading} />
-                  <Bookshelf title='Want to Read' books={this.state.wantToRead} />
-                  <Bookshelf title='Read' books={this.state.read} />
+                  <Bookshelf title='Currently Reading' books={this.state.shelfs.currentlyReading} />
+                  <Bookshelf title='Want to Read' books={this.state.shelfs.wantToRead} />
+                  <Bookshelf title='Read' books={this.state.shelfs.read} />
                 </div>
               </div>
               <div className="open-search">
