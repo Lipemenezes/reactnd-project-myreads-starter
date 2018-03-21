@@ -72,8 +72,9 @@ class BooksApp extends React.Component {
                 </div>
               </div>
               <div className="open-search">
-                <Link to='/search' > 
-                  Add a book
+                <Link to='/search' render={() => (
+                  <SearchBook userBooks={this.state.shelfs} />
+                  )}> 
                 </Link>
               </div>
             </div>
