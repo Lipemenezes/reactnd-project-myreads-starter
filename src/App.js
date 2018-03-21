@@ -31,7 +31,8 @@ class BooksApp extends React.Component {
   changeBookShelf = (book, newShelf) => {
     let shelfs = this.state.shelfs
     shelfs[book.shelf] = shelfs[book.shelf].filter(stateBook => stateBook.id !== book.id)
-    shelfs[newShelf] = shelfs[newShelf].concat([book])
+    if (newShelf !== 'none')
+      shelfs[newShelf] = shelfs[newShelf].concat([book])
     book.shelf = newShelf
     this.setState({
       shelfs: shelfs
@@ -53,9 +54,21 @@ class BooksApp extends React.Component {
               </div>
               <div className="list-books-content">
                 <div>
-                  <Bookshelf title='Currently Reading' books={this.state.shelfs.currentlyReading} />
-                  <Bookshelf title='Want to Read' books={this.state.shelfs.wantToRead} />
-                  <Bookshelf title='Read' books={this.state.shelfs.read} />
+                  <Bookshelf 
+                    title='Currently Reading' 
+                    books={this.state.shelfs.currentlyReading} 
+                    onShelfChange={this.changeBookShelf} 
+                    />
+                  <Bookshelf 
+                    title='Want to Read' 
+                    books={this.state.shelfs.wantToRead} 
+                    onShelfChange={this.changeBookShelf} 
+                    />
+                  <Bookshelf 
+                    title='Read' 
+                    books={this.state.shelfs.read} 
+                    onShelfChange={this.changeBookShelf} 
+                    />
                 </div>
               </div>
               <div className="open-search">
