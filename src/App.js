@@ -1,10 +1,10 @@
 import React from 'react'
-// import * as BooksAPI from './services/BooksAPI'
+import * as BooksAPI from './services/BooksAPI'
 import './App.css'
 import Bookshelf from './components/Bookshelf'
 import SearchBook from './components/SearchBook'
 import { Route, Link } from 'react-router-dom'
-import * as StorageAPI from './services/StorageAPI'
+// import * as StorageAPI from './services/StorageAPI'
 
 class BooksApp extends React.Component {
   state = {
@@ -16,16 +16,16 @@ class BooksApp extends React.Component {
   }
 
   componentDidMount() {
-    this.setState(StorageAPI.get())
-    // BooksAPI.getAll().then(books => {
-    //   this.setState({
-    //     shelfs: {
-    //       currentlyReading: books.filter(book => book.shelf === `currentlyReading`),
-    //       wantToRead: books.filter(book => book.shelf === `wantToRead`),
-    //       read: books.filter(book => book.shelf === `read`)
-    //     }
-    //   })
-    // })
+    // this.setState(StorageAPI.get())
+    BooksAPI.getAll().then(books => {
+      this.setState({
+        shelfs: {
+          currentlyReading: books.filter(book => book.shelf === `currentlyReading`),
+          wantToRead: books.filter(book => book.shelf === `wantToRead`),
+          read: books.filter(book => book.shelf === `read`)
+        }
+      })
+    })
   }
 
   changeBookShelf = (book, newShelf) => {
@@ -41,7 +41,8 @@ class BooksApp extends React.Component {
     this.setState({
       shelfs: shelfs
     })
-    StorageAPI.set(this.state)
+    BooksAPI.update(book, newShelf)
+    // StorageAPI.set(this.state)
   }
 
   render() {
