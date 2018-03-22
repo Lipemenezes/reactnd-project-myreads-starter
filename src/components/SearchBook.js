@@ -46,14 +46,14 @@ class SearchBook extends React.Component {
               <ol className="books-grid">
                 {
                   this.state.isEmptyQuery === false ? 
-                  (
-                    this.state.books.length ? 
+                  (this.state.books.length ? 
                     this.state.books.map(book => 
-                      <Book book={book} 
+                      <Book 
+                        book={book} 
                         key={book.id} 
                         onShelfChange={this.props.onShelfChange} 
-                        />
-                      ) :
+                      />
+                    ) :
                     <div>Nenhum resultado</div>
                   ) : 
                   <div>Sem pesquisa</div>

@@ -48,36 +48,36 @@ class BooksApp extends React.Component {
     const allBooks = shelfs.currentlyReading.concat(shelfs.wantToRead, shelfs.read)
     return (
       <div className="app">
-          <Route path='/search' render={() => (
-            <SearchBook 
-              userBooks={allBooks} 
-              onShelfChange={this.changeBookShelf}
-              />
-          )} />
 
-          <Route path='/' exact render={() => (
+        <Route path='/search' render={() => (
+            <SearchBook 
+              userBooks={allBooks}
+              onShelfChange={this.changeBookShelf}
+            />
+          )}
+        />
+
+        <Route path='/' exact render={() => (
             <div className="list-books">
               <div className="list-books-title">
                 <h1>MyReads</h1>
               </div>
               <div className="list-books-content">
-                <div>
-                  <Bookshelf 
-                    title='Currently Reading' 
-                    books={shelfs.currentlyReading} 
-                    onShelfChange={this.changeBookShelf} 
-                    />
-                  <Bookshelf 
-                    title='Want to Read' 
-                    books={shelfs.wantToRead} 
-                    onShelfChange={this.changeBookShelf} 
-                    />
-                  <Bookshelf 
-                    title='Read' 
-                    books={shelfs.read} 
-                    onShelfChange={this.changeBookShelf} 
-                    />
-                </div>
+                <Bookshelf 
+                  title='Currently Reading' 
+                  books={shelfs.currentlyReading} 
+                  onShelfChange={this.changeBookShelf} 
+                />
+                <Bookshelf 
+                  title='Want to Read' 
+                  books={shelfs.wantToRead} 
+                  onShelfChange={this.changeBookShelf} 
+                />
+                <Bookshelf 
+                  title='Read' 
+                  books={shelfs.read} 
+                  onShelfChange={this.changeBookShelf} 
+                />
               </div>
               <div className="open-search">
                 <Link to='/search'> 
@@ -85,8 +85,9 @@ class BooksApp extends React.Component {
                 </Link>
               </div>
             </div>
-          )} />
-
+          )} 
+        />
+      
       </div>
     )
   }
