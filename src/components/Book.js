@@ -10,7 +10,7 @@ class Book extends React.Component {
     const styleBookCover = {
       width: 128, 
       height: 193, 
-      backgroundImage: `url(${book.imageLinks.smallThumbnail})`
+      backgroundImage: `url(${book.imageLinks ? book.imageLinks.smallThumbnail : ''})`
     }
     return (
       <div className='book'>
