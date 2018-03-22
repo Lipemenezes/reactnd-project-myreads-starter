@@ -12,7 +12,7 @@ class BooksApp extends React.Component {
         currentlyReading: [],
         wantToRead: [],
         read: []
-    },
+    }
   }
 
   componentDidMount() {
@@ -30,9 +30,13 @@ class BooksApp extends React.Component {
 
   changeBookShelf = (book, newShelf) => {
     let shelfs = this.state.shelfs
-    shelfs[book.shelf] = shelfs[book.shelf].filter(stateBook => stateBook.id !== book.id)
+
+    if (book.shelf !== 'none')
+      shelfs[book.shelf] = shelfs[book.shelf].filter(stateBook => stateBook.id !== book.id)
+
     if (newShelf !== 'none')
       shelfs[newShelf] = shelfs[newShelf].concat([book])
+
     book.shelf = newShelf
     this.setState({
       shelfs: shelfs
@@ -41,10 +45,15 @@ class BooksApp extends React.Component {
   }
 
   render() {
+    const shelfs = this.state.shelfs
+    const allBooks = shelfs.currentlyReading.concat(shelfs.wantToRead, shelfs.read)
     return (
       <div className="app">
           <Route path='/search' render={() => (
-            <SearchBook />
+            <SearchBook 
+              userBooks={allBooks} 
+              onShelfChange={this.changeBookShelf}
+              />
           )} />
 
           <Route path='/' exact render={() => (
@@ -56,25 +65,24 @@ class BooksApp extends React.Component {
                 <div>
                   <Bookshelf 
                     title='Currently Reading' 
-                    books={this.state.shelfs.currentlyReading} 
+                    books={shelfs.currentlyReading} 
                     onShelfChange={this.changeBookShelf} 
                     />
                   <Bookshelf 
                     title='Want to Read' 
-                    books={this.state.shelfs.wantToRead} 
+                    books={shelfs.wantToRead} 
                     onShelfChange={this.changeBookShelf} 
                     />
                   <Bookshelf 
                     title='Read' 
-                    books={this.state.shelfs.read} 
+                    books={shelfs.read} 
                     onShelfChange={this.changeBookShelf} 
                     />
                 </div>
               </div>
               <div className="open-search">
-                <Link to='/search' render={() => (
-                  <SearchBook userBooks={this.state.shelfs} />
-                  )}> 
+                <Link to='/search'> 
+                  Search Book
                 </Link>
               </div>
             </div>
