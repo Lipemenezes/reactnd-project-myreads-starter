@@ -16,7 +16,6 @@ class BooksApp extends React.Component {
   }
 
   componentDidMount() {
-    // this.setState(StorageAPI.get())
     BooksAPI.getAll().then(books => {
       this.setState({
         shelfs: {
@@ -42,7 +41,6 @@ class BooksApp extends React.Component {
       shelfs: shelfs
     })
     BooksAPI.update(book, newShelf)
-    // StorageAPI.set(this.state)
   }
 
   render() {
