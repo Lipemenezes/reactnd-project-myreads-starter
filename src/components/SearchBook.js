@@ -3,16 +3,25 @@ import * as BooksAPI from '../services/BooksAPI'
 import '../App.css'
 import { Link } from 'react-router-dom'
 import Book from './Book'
+import debounce from 'debounce'
 
 class SearchBook extends React.Component {
+  constructor() {
+    super()
+    this.callSearchAPI = debounce(this.callSearchAPI, 500)
+  }
   state = {
     books: [],
     isEmptyQuery: true
   }
   searchBooks(event) {
-    !event.target.value ?
+    this.callSearchAPI(event.target.value)  
+  }
+  callSearchAPI(value) {
+    console.log('api accesss')
+    !value ?
     this.setState({books: [], isEmptyQuery: true}) :
-    BooksAPI.search(event.target.value).then(books => {
+    BooksAPI.search(value).then(books => {
       books && books.error ? 
       this.setState({
         books: [], 
