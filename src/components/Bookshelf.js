@@ -20,7 +20,7 @@ class Bookshelf extends React.Component {
               {
                 books.length ? 
                 books.map(book => <Book book={book} key={book.id} onShelfChange={this.props.onShelfChange} /> ) : 
-                <div>Get some custom component for spinner..</div>
+                <div>Empty shelf</div>
               }
           </ol>
         </div>

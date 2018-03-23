@@ -4,6 +4,7 @@ import '../App.css'
 import { Link } from 'react-router-dom'
 import Book from './Book'
 import debounce from 'debounce'
+import { HashLoader } from 'react-spinners';
 
 class SearchBook extends React.Component {
   constructor() {
@@ -12,28 +13,38 @@ class SearchBook extends React.Component {
   }
   state = {
     books: [],
-    isEmptyQuery: true
+    isEmptyQuery: true,
+    loading: false
   }
   searchBooks(event) {
+    this.setState({
+      loading: true
+    })
     this.callSearchAPI(event.target.value)  
   }
   callSearchAPI(value) {
-    console.log('api accesss')
     !value ?
-    this.setState({books: [], isEmptyQuery: true}) :
+    this.setState({
+      books: [], 
+      isEmptyQuery: true,
+      loading: false
+    }) :
     BooksAPI.search(value).then(books => {
-      books && books.error ? 
-      this.setState({
-        books: [], 
-        isEmptyQuery: false
-      }) : 
-      this.setState({
-        books: books.map(book => {
-          let bookMatch = this.props.userBooks.filter(userBook => userBook.id === book.id)
-          book['shelf'] = bookMatch.length ? bookMatch[0]['shelf'] : `none`
-          return book
-        }), 
-        isEmptyQuery: false})            
+        books && books.error ? 
+        this.setState({
+          books: [], 
+          isEmptyQuery: false,
+          loading: false
+        }) : 
+        this.setState({
+            books: books.map(book => {
+              let bookMatch = this.props.userBooks.filter(userBook => userBook.id === book.id)
+              book['shelf'] = bookMatch.length ? bookMatch[0]['shelf'] : `none`
+              return book
+            }), 
+            isEmptyQuery: false,
+            loading: false
+        })            
       }
     )
   }
@@ -42,7 +53,6 @@ class SearchBook extends React.Component {
           <div className="search-books">
             <div className="search-books-bar">
               <Link to='/' className="close-search"> 
-                Close
               </Link>
               <div className="search-books-input-wrapper">
                 <input type="text" placeholder="Search by title or author" onChange={this.searchBooks.bind(this)} />
@@ -51,7 +61,12 @@ class SearchBook extends React.Component {
             <div className="search-books-results">
               <ol className="books-grid">
                 {
-                  this.state.isEmptyQuery === false ? 
+                  this.state.loading ?
+                  <HashLoader
+                    color={'#2e7d32'} 
+                    loading={this.state.loading} 
+                  /> :
+                  !this.state.isEmptyQuery ? 
                   (this.state.books.length ? 
                     this.state.books.map(book => 
                       <Book 
@@ -60,9 +75,9 @@ class SearchBook extends React.Component {
                         onShelfChange={this.props.onShelfChange} 
                       />
                     ) :
-                    <div>Nenhum resultado</div>
+                    <div>We couldn't find any books</div>
                   ) : 
-                  <div>Sem pesquisa</div>
+                  <div></div>
                 }
               </ol>
             </div>
