@@ -4,7 +4,6 @@ import './App.css'
 import Bookshelf from './components/Bookshelf'
 import SearchBook from './components/SearchBook'
 import { Route, Link } from 'react-router-dom'
-// import * as StorageAPI from './services/StorageAPI'
 
 class BooksApp extends React.Component {
   state = {

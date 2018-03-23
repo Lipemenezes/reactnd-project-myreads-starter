@@ -5,12 +5,10 @@ import { Link } from 'react-router-dom'
 import Book from './Book'
 
 class SearchBook extends React.Component {
-
   state = {
     books: [],
     isEmptyQuery: true
   }
-
   searchBooks(event) {
     !event.target.value ?
     this.setState({books: [], isEmptyQuery: true}) :
@@ -30,7 +28,6 @@ class SearchBook extends React.Component {
       }
     )
   }
-
   render() {
     return (
           <div className="search-books">
