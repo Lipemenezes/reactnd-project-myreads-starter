@@ -4,7 +4,8 @@ import '../App.css'
 import { Link } from 'react-router-dom'
 import Book from './Book'
 import debounce from 'debounce'
-import { HashLoader } from 'react-spinners';
+import { HashLoader } from 'react-spinners'
+import EmptyShelf from './EmptyShelf'
 
 class SearchBook extends React.Component {
   constructor() {
@@ -75,7 +76,7 @@ class SearchBook extends React.Component {
                         onShelfChange={this.props.onShelfChange} 
                       />
                     ) :
-                    <div>We couldn't find any books</div>
+                    <EmptyShelf message='We could not find any books!' />
                   ) : 
                   <div></div>
                 }

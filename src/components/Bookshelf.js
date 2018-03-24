@@ -1,6 +1,7 @@
 import React from 'react'
 import '../App.css'
 import Book from './Book'
+import EmptyShelf from './EmptyShelf'
 
 class Bookshelf extends React.Component {
   state = {
@@ -20,7 +21,9 @@ class Bookshelf extends React.Component {
               {
                 books.length ? 
                 books.map(book => <Book book={book} key={book.id} onShelfChange={this.props.onShelfChange} /> ) : 
-                <div>Empty shelf</div>
+                <div>
+                  <EmptyShelf message='No books here!' />
+                </div>
               }
           </ol>
         </div>
